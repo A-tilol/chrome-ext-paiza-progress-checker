@@ -1,0 +1,64 @@
+.inline-radio {
+    border: none;
+    padding: 0;
+    margin-left: 96px;
+    /* text-align: center; */
+}
+
+.radio-inline__input {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+}
+
+.radio-inline__label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    margin-right: 3px;
+    border: 1px solid #079AD9;
+    border-radius: 3px;
+    transition: all .2s;
+}
+
+.radio-inline__input:checked+.radio-inline__label {
+    background: #5bbb41;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .7);
+}
+
+.radio-inline__input:focus+.radio-inline__label {
+    outline-color: #4D90FE;
+    outline-offset: -2px;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.summary__label {
+    display: inline-block;
+    /* background: #5bbb41; */
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .7);
+    padding: 0.5rem 0.75rem;
+    margin-right: 6px;
+    border: 1px solid #079AD9;
+    border-radius: 3px;
+    transition: all .2s;
+}
+
+.summary__label__0 {
+    background: #5bbb41;
+}
+
+.summary__label__1 {
+    background: #8ccc7a;
+}
+
+.summary__label__2 {
+    background: #a9caa1;
+}
+
+.summary__span {
+    padding-left: 20px;
+}

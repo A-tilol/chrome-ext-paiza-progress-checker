@@ -1,0 +1,15 @@
+{
+  "name": "Paiza Progress Checker",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Paiza Progress Checker",
+  "permissions": ["storage"],
+  "icons": {},
+  "content_scripts": [
+    {
+      "matches": ["https://paiza.jp/*"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}
