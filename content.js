@@ -1,27 +1,21 @@
-// TODO: 容量削減のためストレージの保存キーをハッシュにする。sync storageの上限102400byte
-
 const WAIT_MSEC_FOR_MENU_LIST_PAGE = 1000;
 const SEP = "__$sep$__";
-const CHECKBOX_STATES = "checkboxStates";
 const RADIO = [
   {
     value: 0,
     id: "ok",
-    name: "checker",
     label: "完全理解",
     info: "自分で考えたり調べたりすることで解くことができる",
   },
   {
     value: 1,
     id: "working",
-    name: "checker",
     label: "もう少し",
     info: "誰かに聞いたり答えを見たりすることで解くことができる",
   },
   {
     value: 2,
     id: "notStarted",
-    name: "checker",
     label: "未着手",
     info: "まだ解いていない問題",
   },
@@ -58,21 +52,20 @@ const createCheckers = async (menuTitle, problemId) => {
 
 // ページ内のすべての問題にラジオボタンを追加
 const createAllRadios = async () => {
-  const menuTitle =
-    document.getElementsByClassName("a-works-heading1")[0].textContent;
+  const menuTitle = document.querySelector(".a-works-heading1").textContent;
 
   let problemElms = document.getElementsByClassName("m-practice-problem");
   for (const problemElm of problemElms) {
-    const problemHeaderElm = problemElm.getElementsByClassName(
-      "m-practice-problem__heading"
-    )[0];
+    const problemHeaderElm = problemElm.querySelector(
+      ".m-practice-problem__heading"
+    );
     let problemId = problemHeaderElm.textContent;
 
     const checkerElm = await createCheckers(menuTitle, problemId);
 
-    const problemEnemyElm = problemElm.getElementsByClassName(
-      "m-practice-problem__enemy"
-    )[0];
+    const problemEnemyElm = problemElm.querySelector(
+      ".m-practice-problem__enemy"
+    );
     problemEnemyElm.after(checkerElm);
   }
 };
@@ -88,10 +81,7 @@ const sha256Prefix8 = async (text) => {
 
 // チェックボックスの状態を保存
 const saveRadioState = async (event) => {
-  const parts = event.srcElement.id.split(SEP);
-  const menuHash = parts[0];
-  const problemHash = parts[1];
-  const progress = parts[2];
+  const [menuHash, problemHash, progress] = event.srcElement.id.split(SEP);
 
   let states = await chrome.storage.sync.get(menuHash);
   states[menuHash] = states[menuHash] || {};
@@ -104,7 +94,7 @@ const saveRadioState = async (event) => {
 
 const restoreStatesInMenu = async () => {
   const menuTitle = document
-    .getElementsByClassName("a-works-heading1")[0]
+    .querySelector(".a-works-heading1")
     .textContent.replace(/\s/g, "");
   const menuHash = await sha256Prefix8(menuTitle);
 
@@ -147,9 +137,9 @@ const countStates = (problemN, menuStates) => {
 
 const createProgressSummryInMenuPage = async () => {
   const extractNumOfProblems = () => {
-    const text = document.getElementsByClassName(
-      "m-mondai-problems-progress__value"
-    )[0].textContent;
+    const text = document.querySelector(
+      ".m-mondai-problems-progress__value"
+    ).textContent;
     return Number(text.split("/").pop().replace(/\s/g, "").replace("問", ""));
   };
 
@@ -243,7 +233,7 @@ const createElementForMenuPage = async () => {
   // 進捗ステータスボタンを追加
   await createAllRadios();
 
-  // ページが読み込まれたら進捗ステータスをストレージから復元
+  // 進捗ステータスをストレージから復元
   loadRadioStates();
 };
 
